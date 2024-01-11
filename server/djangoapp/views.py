@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 # from .models import related models
-# from .restapis import related methods
+from .restapis import get_dealers_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
@@ -97,10 +97,20 @@ def get_dealerships(request):
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
+#def get_dealer_details(request):
+#    context = {}
+#    if request.method == "GET":
+#        return render(request, 'djangoapp/dealer_details.html', context)
 def get_dealer_details(request):
-    context = {}
     if request.method == "GET":
-        return render(request, 'djangoapp/dealer_details.html', context)
+        context = {}
+        review_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id=15"
+        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        print(reviews)
+        reviews_json = json.dumps(reviews)
+        response = HttpResponse(reviews_json, content_type='application/json')
+        
+        return response
 # def get_dealer_details(request, dealer_id):
 # ...
 def get_dealer_details(request, id):
