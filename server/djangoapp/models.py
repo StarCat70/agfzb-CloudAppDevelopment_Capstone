@@ -9,27 +9,23 @@ import json
 
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:
 class CarMake(models.Model):
-    name = models.CharField(null=False, max_length=20, default='undefined')
-    # - Name
-    description = models.TextField(null=True)
+    name = models.CharField(null=False, max_length=20, default='Make')
+    description = models.CharField(max_length=500)
     # - Description
     # - Any other fields you would like to include in car make model
     def __str__(self):
     # - __str__ method to print a car make object
-        return self.name + ": " + self.description
+        return "Name: " + self.name
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 class CarModel(models.Model):
-    car_make = models.ForeignKey(CarMake, null=False, on_delete=models.CASCADE)
+    make = models.ForeignKey(CarMake, null=False, on_delete=models.CASCADE)
 # - Many-To-One relationship to Car Make model (One Car Make has many Car Models, using ForeignKey field)
-name = models.CharField(null=False, max_length=40, default='undefined')
-# - Name
-dealer_id = models.CharField(null=False, max_length=40, default='undefined')
-# - Dealer id, used to refer a dealer created in cloudant database
-class CarModel(models.Model):
-    id = models.IntegerField(default=1,primary_key=True)
     name = models.CharField(null=False, max_length=100, default='Car')
-   
+# - Name
+    id = models.IntegerField(default=1, primary_key=True)
+# - Dealer id, used to refer a dealer created in cloudant database 
+
     SEDAN = 'Sedan'
     SUV = 'SUV'
     WAGON = 'Wagon'
@@ -47,7 +43,7 @@ class CarModel(models.Model):
         choices=CAR_TYPES,
         default=SEDAN
     )
-    make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+
     year = models.DateField(default=now)
 
     def __str__(self):
@@ -111,6 +107,7 @@ class DealerReview:
         return json.dumps(self, default=lambda o: o.__dict__,
                             sort_keys=True, indent=4)
 
+# <HINT> Create a plain Python class `ReviewPost` to post review data
 class ReviewPost:
 
     def __init__(self, dealership, name, purchase, review):
@@ -126,4 +123,3 @@ class ReviewPost:
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                             sort_keys=True, indent=4)
-
