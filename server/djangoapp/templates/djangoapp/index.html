@@ -47,7 +47,6 @@
         </div>
     </nav>
     <!--Add a dealer table here -->
-    <!--<table id="CarDealer" class="table table-striped table-bordered" cellspacing="0" width="100%"> -->
         <table class="table" id="table" data-filter-control="true">    
         <thead>
             <tr>
@@ -65,7 +64,7 @@
                 <tr>
                     <td>{{ dealer.id }}</td>
                     <td><a href="{% url 'djangoapp:dealer_details' dealer.id %}">{{dealer.full_name}}</a></td>
-                    <td>{{ dealer.short_name }}</td>
+                    <!--<td>{{ dealer.short_name }}</td> -->
                     <td>{{ dealer.city }}</td>
                     <td>{{ dealer.address }}</td>
                     <td>{{ dealer.zip }}</td>
