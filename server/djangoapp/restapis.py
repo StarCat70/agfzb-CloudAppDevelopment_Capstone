@@ -113,6 +113,7 @@ def get_dealers_from_cf(url, **kwargs):
                 )
                 results.append(dealer_obj)
     return results
+
 """
 Considering replacing code above with code below from the instructions to possibly fix errors
 

@@ -96,10 +96,11 @@ def get_dealerships(request):
         return render(request, 'djangoapp/index.html', context)
 """
 My note: Considering replacing above code with the code below given from instructions to fix errors
+Update: The code below that was given in instruction does not work
 
 def get_dealerships(request):
     if request.method == "GET":
-        url = "your-cloud-function-domain/dealerships/dealer-get"
+        url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
