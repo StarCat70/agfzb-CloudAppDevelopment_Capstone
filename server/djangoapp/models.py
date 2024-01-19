@@ -61,8 +61,6 @@ def __str__(self):
 # <HINT> Create a plain Python class `CarDealer` to hold dealer data
 class CarDealer:
 
-class CarDealer:
-
     def __init__(self, address, city, full_name, id, lat, long, short_name, st, zip):
         # Dealer address
         self.address = address
