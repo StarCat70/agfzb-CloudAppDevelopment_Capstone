@@ -114,6 +114,7 @@ def get_dealerships(request):
 #    context = {}
 #    if request.method == "GET":
 #        return render(request, 'djangoapp/dealer_details.html', context)
+"""
 def get_dealer_details(request):
     if request.method == "GET":
         context = {}
@@ -124,6 +125,21 @@ def get_dealer_details(request):
         response = HttpResponse(reviews_json, content_type='application/json')
         
         return response
+"""
+def get_dealer_details(request, id):
+    if request.method == "GET":
+        context = {}
+        dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+        context["dealer"] = dealer
+    
+        review_url = f"https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id={id}"
+        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        print(reviews)
+        context["reviews"] = reviews
+        
+        return render(request, 'djangoapp/dealer_details.html', context)
+
 # def get_dealer_details(request, dealer_id):
 # ...
 def get_dealer_details(request, id):

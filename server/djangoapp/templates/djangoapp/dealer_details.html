@@ -12,6 +12,24 @@
     <!--Add a nav bar here -->
     <a class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id%}">Add Review</a>
     <!-- Add reviews as cards -->
+    <!-- MY NOTE:  The following code is to be tinkered with and isn't final -->
+    <!-- Display dealer details -->
+    <h2>{{ dealer.full_name }}</h2>
+    <p>City: {{ dealer.city }}</p>
+    <p>Address: {{ dealer.address }}</p>
+    <p>Zip: {{ dealer.zip }}</p>
+    <p>State: {{ dealer.st }}</p>
+
+    <!-- Display reviews as cards -->
+    {% for review in reviews %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ review.name }}</h5>
+                <p class="card-text">{{ review.review }}</p>
+                <!-- Add other review details here -->
+            </div>
+        </div>
+    {% endfor %}
 
     </body>
 

@@ -81,6 +81,7 @@ def post_request(url, payload, **kwargs):
 #    else:
 #        json_result = get_request(url)
 
+"""
 def get_dealers_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
@@ -113,7 +114,7 @@ def get_dealers_from_cf(url, **kwargs):
                 )
                 results.append(dealer_obj)
     return results
-
+"""
 """
 Considering replacing code above with code below from the instructions to possibly fix errors
 
@@ -137,6 +138,54 @@ def get_dealers_from_cf(url, **kwargs):
 
     return results
 """
+"""
+def get_dealers_from_cf(url, **kwargs):
+    results = []
+    # Call get_request with a URL parameter
+    json_result = get_request(url)
+    if json_result:
+        # Get the row list in JSON as dealers
+        dealers = json_result
+        # For each dealer object
+        for dealer in dealers:
+            # Get its content in 'doc' object
+            dealer_doc = dealer
+            # Create a CarDealer object with values in 'doc' object
+            dealer_obj = CarDealer(address=dealer_doc["address"], city=dealer_doc["city"], full_name=dealer_doc["full_name"],
+                                  id=dealer_doc["id"], lat=dealer_doc["lat"], long=dealer_doc["long"], short_name=dealer_doc["short_name"],
+                                  st=dealer_doc["st"], zip=dealer_doc["zip"])
+            results.append(dealer_obj)
+        return results
+"""
+def get_dealers_from_cf(api_url):
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        dealerships_data = response.json()
+
+        dealerships = []
+        for dealer_doc in dealerships_data:
+            # Assuming each dealer_doc is a dictionary with relevant keys
+            dealer_obj = CarDealer(
+                address=dealer_doc.get("address", ""),
+                city=dealer_doc.get("city", ""),
+                full_name=dealer_doc.get("full_name", ""),
+                id=dealer_doc.get("id", ""),
+                lat=dealer_doc.get("lat", ""),
+                long=dealer_doc.get("long", ""),
+                short_name=dealer_doc.get("short_name", ""),
+                st=dealer_doc.get("st", ""),
+                zip=dealer_doc.get("zip", "")
+            )
+            dealerships.append(dealer_obj)
+
+        return dealerships
+    else:
+        # Handle the error or return an empty list
+        return []
+
+# Note: Adjust the keys based on the actual structure of the API response
+# MY note: The above code from the point up to the commented out section is to be tinkered with
+
 # - Call get_request() with specified arguments
 # - Parse JSON results into a CarDealer object list
 
@@ -153,12 +202,16 @@ def get_dealer_reviews_from_cf(url, **kwargs):
         reviews = json_result["body"]["data"]["docs"]
 
         for dealer_review in reviews:
-            dealer_review = reviews
-            
+            #dealer_review = reviews
+            reviews = json_result["body"]["data"]["docs"]
+
+        for dealer_review_data in reviews:
+            print("Dealer Review Data:", dealer_review_data)
             review_obj = DealerReview(dealership=dealer_review["dealership"],
                                    name=dealer_review["name"],
                                    purchase=dealer_review["purchase"],
                                    review=dealer_review["review"])
+
             if "id" in dealer_review:
                 review_obj.id = dealer_review["id"]
             if "purchase_date" in dealer_review:
