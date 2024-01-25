@@ -95,71 +95,13 @@ def get_dealerships(request):
         dealerships = get_dealers_from_cf(url)
         context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
-"""
-My note: Considering replacing above code with the code below given from instructions to fix errors
-Update: The code below that was given in instruction does not work
-
-def get_dealerships(request):
-    if request.method == "GET":
-        url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-        # Get dealers from the URL
-        dealerships = get_dealers_from_cf(url)
-        # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        return HttpResponse(dealer_names)
-"""
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 #def get_dealer_details(request):
 #    context = {}
 #    if request.method == "GET":
 #        return render(request, 'djangoapp/dealer_details.html', context)
-"""
-def get_dealer_details(request):
-    if request.method == "GET":
-        context = {}
-        review_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id=15"
-        reviews = get_dealer_reviews_from_cf(review_url, id=id)
-        print(reviews)
-        reviews_json = json.dumps(reviews)
-        response = HttpResponse(reviews_json, content_type='application/json')
-        
-        return response
-"""
-"""
-def get_dealer_details(request, id):
-    if request.method == "GET":
-        context = {}
-        dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
-        context["dealer"] = dealer
-    
-        review_url = f"https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id={id}"
-        reviews = get_dealer_reviews_from_cf(review_url, id=id)
-        print(reviews)
-        context["reviews"] = reviews
-        
-        return render(request, 'djangoapp/dealer_details.html', context)
-"""
-# def get_dealer_details(request, dealer_id):
-# ...
-"""
-def get_dealer_details(request, id):
-    if request.method == "GET":
-        context = {}
-        dealer_url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
-        context["dealer"] = dealer
-    
-        review_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews?id=15"
-        #review_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
-        reviews = get_dealer_reviews_from_cf(review_url, id=id)
-        print(reviews)
-        context["reviews"] = reviews
-        
-        return render(request, 'djangoapp/dealer_details.html', context)
-"""
+
 def get_dealer_details(request, id):
      if request.method == "GET":
          context = {}
@@ -184,11 +126,6 @@ def add_review(request, id):
     context["dealer"] = dealer
     if request.method == 'GET':
         # Get cars for the dealer
-        """
-        cars = CarModel.objects.filter(id=id)
-        print(cars)
-        context["cars"] = cars
-        """
         cars = CarModel.objects.all()
         print(cars)
         context["cars"] = cars
