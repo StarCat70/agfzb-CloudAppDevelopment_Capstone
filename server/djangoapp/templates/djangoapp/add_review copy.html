@@ -11,9 +11,9 @@
 
 </head>
 <body>
-    <form action="{% url 'djangoapp:add_review' dealer.id %}" method="post">
+    <form action="{% url 'djangoapp:add_review' dealer_id %}" method="post">
         <div class="container">
-            <!--{% csrf_token %} -->
+            {% csrf_token %}
             <h1>Review</h1>
             <hr>
             <div class="form-group">
@@ -34,34 +34,21 @@
             </div>
             <div class="form-group">
                 <label for="purchasedate">Purchase Date:</label>
-                <input type="text" id="purchasedate" name="purchase_date" class="datepicker" required>
-
+                <input class="form-control date-own" type="text" name="purchasedate" id="purchasedate">
             </div>
-            <button class="btn btn-primary" type="submit">Submit</button>    
-           
-
+            <button class="btn btn-primary" type="submit">Submit Review</button>
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-warning" role="alert">{{ message }}</div>
                 {% endfor %}
             {% endif %}
         </div>
-       
     </form>
-    <!--<script type="text/javascript">
+
+    <script type="text/javascript">
         $('.date-own').datepicker({
             format: 'mm/dd/yyyy'
         });
-    </script> -->
-    <script>
-        $(document).ready(function(){
-            $('.datepicker').datepicker({
-                format: 'yyyy-mm-dd',  // Set the desired date format
-                autoclose: true,
-                todayHighlight: true
-            });
-        });
-    </script> 
-
+    </script>
 </body>
 </html>
