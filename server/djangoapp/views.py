@@ -10,6 +10,7 @@ from django.contrib import messages
 from datetime import datetime
 import logging
 import json
+import requests
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -119,6 +120,7 @@ def get_dealer_details(request, id):
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
+"""
 def add_review(request, id):
     context = {}
     dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
@@ -164,7 +166,7 @@ def add_review(request, id):
                 "review": request.POST["content"],  # Extract the review from the POST request
                 "purchase": True,  # Extract purchase info from POST
                 "purchase_date":request.POST["purchasedate"],  # Extract purchase date from POST
-                "car_make": car.carmake.name,  # Extract car make from POST
+                "car_make": car.make.name,  # Extract car make from POST
                 "car_model": car.name,  # Extract car model from POST
                 "car_year": int(car.year.strftime("%Y")),  # Extract car year from POST
             }
@@ -174,5 +176,52 @@ def add_review(request, id):
             print("\nREVIEW:",review)
             post_request(review_post_url, review, id = id)
         return redirect("djangoapp:dealer_details", id=id)
+        """
+# Import the requests module
+import requests
+
+def add_review(request, id):
+    context = {}
+    dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+    context["dealer"] = dealer
+    if request.method == 'GET':
+        # Get cars for the dealer
+        cars = CarModel.objects.all()
+        context["cars"] = cars
+        return render(request, 'djangoapp/add_review.html', context)
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            username = request.user.username
+            car_id = request.POST["car"]
+            car = CarModel.objects.get(pk=car_id)
+            payload = {
+                "id": id,
+                "time": datetime.utcnow().isoformat(),
+                "name": username,
+                "dealership": id,
+                "review": request.POST["content"],
+                "purchase": False,
+                "purchase_date": request.POST["purchasedate"],
+                "car_make": car.make.name,
+                "car_model": car.name,
+                "car_year": int(car.year.strftime("%Y")),
+            }
+            review_post_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
+
+            # Use requests.post to make the HTTP POST request
+            response = requests.post(review_post_url, json=payload)
+
+            # Check if the request was successful (status code 201)
+            if response.status_code == 201:
+                return redirect("djangoapp:dealer_details", id=id)
+            else:
+                # If the request was not successful, handle the error accordingly
+                messages.error(request, "Failed to post review.")
+                return render(request, 'djangoapp/add_review.html', context)
+
+    # Return a default response if neither GET nor POST
+    return HttpResponse("Invalid request method")
+
 	
 
