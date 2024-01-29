@@ -47,7 +47,8 @@
         </div>
     </nav>
     <!--Add a dealer table here -->
-        <table class="table" id="table" data-filter-control="true"> 
+    <div class="container-fluid">
+        <table class="table table-bordered" id="table" data-filter-control="true"> 
         <thead>
             <tr>
                 <th data-field="id">ID</th>
@@ -74,6 +75,7 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 </body>
 <script>
   $(function() {

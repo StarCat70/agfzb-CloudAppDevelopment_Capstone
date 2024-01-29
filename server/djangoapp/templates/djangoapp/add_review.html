@@ -12,20 +12,20 @@
 </head>
 <body>
     <form action="{% url 'djangoapp:add_review' dealer.id %}" method="post">
-        <div class="container">
+        <div class="container-fluid">
             <!--{% csrf_token %} -->
             <h1>Add a review for {{ dealer.full_name }}</h1>
             <hr>
             <div class="form-group">
-                <label for="content">Review Content:</label>
+                <h5><label for="content">Enter the review content:</label></h5>
                 <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
             </div>
             <div class="form-group form-check">
                 <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
-                <label class="form-check-label" for="purchasecheck">Purchase Made</label>
+                <label class="form-check-label" for="purchasecheck">Has purchased the car from {{ dealer.full_name}} ? (select purchased car information below if checked)</label>
             </div>
             <div class="form-group">
-                <label for="car">Car Model:</label>
+                <h5><label for="car">Select your car (model-make-year):</label></h5>
                 <select name="car" id="car" class="form-select" required>
                     {% for car in cars %}
                         <option value="{{ car.id }}">{{ car.name }} - {{ car.make.name }} - {{ car.year|date:"Y" }}</option>
@@ -33,7 +33,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="purchasedate">Purchase Date:</label>
+                <h5><label for="purchasedate">Select your purchase date (mm/dd/yyyy) :</label></h5>
                 <!--<input type="text" id="purchasedate" name="purchase_date" class="datepicker" required> -->
                 <input class="date-picker" type="text" name="purchasedate" id="purchasedate">
 

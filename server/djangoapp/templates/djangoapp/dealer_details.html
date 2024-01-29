@@ -71,27 +71,33 @@
 <!--            </div>
         </div>
     {% endfor %} -->
+    <div class="container-fluid">
+        <h2>Reviews for {{ dealer.full_name }}</h2>
     <div class="container mt-4">
         <!-- Display dealer details -->
-        <h2>{{ dealer.full_name }}</h2>
-        <p>City: {{ dealer.city }}</p>
-        <p>Address: {{ dealer.address }}</p>
-        <p>Zip: {{ dealer.zip }}</p>
-        <p>State: {{ dealer.st }}</p>
     
         <!-- Display reviews as cards -->
-        <div class="card-columns">
+<!--
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+            <div class="card-header">Header</div>            
             {% for review in reviews %}
-            <div class="card">
                 <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" alt="Review Image">
                 <div class="card-body">
                     <h5 class="card-title">{{ review.name }}</h5>
                     <p class="card-subtitle mb-2 text-muted">{{ review.car_make }}</p>
                     <p class="card-text">{{ review.purchase_date }}</p>
                     <p class="card-text">{{ review.review }}</p>
-                    
-                    <!-- Include the dealership name within the review card -->
-                    <p class="card-text"><small class="text-muted">Dealership: {{ dealer.full_name }}</small></p>
+                -->
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{{MEDIA_URL}}/emoji/positive.png" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ review.name }}</h5>
+                      <p class="card-text">{{ review.car.make }}</p>
+                      <p class="card-text">{{ review.purchase_date }}</p>
+                      <p class="card-text">{{ review.review }}</p>
+                    </div>
+                  </div>            
+
                     
                     <!-- Add other review details here -->
                 </div>
@@ -99,6 +105,7 @@
             {% endfor %}
         </div>
     </div>
+</div>
     </body>
 
 </html>
