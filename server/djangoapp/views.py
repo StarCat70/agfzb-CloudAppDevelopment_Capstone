@@ -11,6 +11,7 @@ from datetime import datetime
 import logging
 import json
 import requests
+from .restapis import post_request
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -92,7 +93,8 @@ def registration_request(request):
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        # it keeps changing! url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         dealerships = get_dealers_from_cf(url)
         context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
@@ -106,11 +108,13 @@ def get_dealerships(request):
 def get_dealer_details(request, id):
      if request.method == "GET":
          context = {}
-         dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+         # it keeps changing! dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+         dealer_url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
          dealer = get_dealer_by_id_from_cf(dealer_url, id = id)
          context['dealer'] = dealer
 
-         review_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+         #  it keeps changing! review_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+         review_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
          reviews = get_dealer_reviews_from_cf(review_url, id = id)
          print(reviews)
          context['reviews'] = reviews
@@ -121,7 +125,7 @@ def get_dealer_details(request, id):
 # def add_review(request, dealer_id):
 # ...
 
-
+"""
 def add_review(request, id):
     context = {}
     dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
@@ -167,6 +171,43 @@ def add_review(request, id):
 
     # Return a default response if neither GET nor POST
     return HttpResponse("Invalid request method")
-
+"""
+def add_review(request, id):
+    context = {}
+    # it keeps changing! url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    dealer = get_dealer_by_id_from_cf(url, id)
+    context["dealer"] = dealer    
+    if request.method == 'GET':
+        # Get cars for the dealer
+        cars = CarModel.objects.all()
+        print(cars)
+        context["cars"] = cars
+        return render(request, 'djangoapp/add_review.html', context)
+    
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            car_id = request.POST["car"]
+            car = CarModel.objects.get(pk=car_id)
+            # it keeps changing! review_post_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
+            review_post_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
+            review = {
+                "id":id,
+                "time":datetime.utcnow().isoformat(),
+                "name":request.user.username,  # Assuming you want to use the authenticated user's name
+                "dealership" :id,                
+                "review": request.POST["content"],  # Extract the review from the POST request
+                "purchase": True,  # Extract purchase info from POST
+                "purchase_date":request.POST["purchasedate"],  # Extract purchase date from POST
+                "car_make": car.make.name,  # Extract car make from POST
+                "car_model": car.name,  # Extract car model from POST
+                "car_year": int(car.year.strftime("%Y")),  # Extract car year from POST
+            }
+            review=json.dumps(review,default=str)
+            new_payload1 = {}
+            new_payload1["review"] = review
+            print("\nREVIEW:",review)
+            post_request(review_post_url, review, id = id)
+        return redirect("djangoapp:dealer_details", id = id)
 	
 
