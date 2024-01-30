@@ -195,20 +195,17 @@ def add_review(request, id):
             username = request.user.username
             car_id = request.POST["car"]
             car = CarModel.objects.get(pk=car_id)
-
-            purchase = request.POST.get("purchasecheck") == "on"
             payload = {
                 "id": id,
                 "time": datetime.utcnow().isoformat(),
                 "name": username,
                 "dealership": id,
                 "review": request.POST["content"],
-                "purchase": purchase,
+                "purchase": False,
                 "purchase_date": request.POST["purchasedate"],
                 "car_make": car.make.name,
                 "car_model": car.name,
                 "car_year": int(car.year.strftime("%Y")),
-            
             }
             review_post_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
 
