@@ -50,31 +50,25 @@
     <div class="container-fluid">
         <h2>Reviews for {{ dealer.full_name }}</h2>
         {% if reviews %}
-        <p>Reviews: {{ reviews }}</p>
-    {% else %}
-        <p>No reviews available</p>
-    {% endif %}
-    
+            <p>Reviews: {{ reviews }}</p>
+        {% else %}
+            <p>No reviews available</p>
+        {% endif %}
         <div class="card-columns">
             {% for review in reviews %}
-                <div class="card">
-                    {# Visualize sentiment using emoji based on sentiment value #}
-                    {% if review.sentiment == "positive" %}
-                        <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" alt="Positive Emoji">
-                    {% elif review.sentiment == "neutral" %}
-                        <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" alt="Neutral Emoji">
-                    {% elif review.sentiment == "negative" %}
-                        <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" alt="Negative Emoji">
-                    {% endif %}
-    
-                    <div class="card-body">
-                        <h5 class="card-title">{{ review.car_model }} {{ review.car_make }} ({{ review.car_year }})</h5>
-                        <p class="card-text">{{ review.review }}</p>
+                    <div class="card">
+                        <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card Title</h5>
+                            <h5 class="card-title">{{ review.name }}</h5>
+                            <p class="card-text">{{ review.car_make }}</p>
+                            <p class="card-text">{{ review.purchase_date }}</p>
+                            <p class="card-text">{{ review.review }}</p>
+                        </div>
                     </div>
-                </div>
             {% endfor %}
+            </div>
         </div>
-    </div>
     </div>
     </body>
 
