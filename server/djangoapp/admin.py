@@ -20,4 +20,4 @@ class CarModelAdmin(admin.ModelAdmin):
     search_fields = ['name', 'car_make__name']
     list_filter = ['type', 'year']
     inlines = [CarModelInline]
-# Register models here
+
