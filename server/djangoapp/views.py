@@ -106,7 +106,7 @@ def get_dealerships(request):
 #        return render(request, 'djangoapp/dealer_details.html', context)
 
 def get_dealer_details(request, id):
-     if request.method == "GET":
+     #if request.method == "GET":
          context = {}
          dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
           # it keeps changing!dealer_url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
@@ -216,7 +216,6 @@ def add_review(request, id):
     url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
     dealer = get_dealer_by_id_from_cf(url, id)
     context["dealer"] = dealer
-
     if request.method == 'GET':
         # Get cars for the dealer
         cars = CarModel.objects.all()

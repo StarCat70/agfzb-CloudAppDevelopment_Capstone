@@ -1,7 +1,7 @@
 import requests
 import json
 # import related models here
-from .models import CarDealer, DealerReview, CarMake, CarModel
+from .models import CarDealer, DealerReview, CarMake, CarModel, ReviewPost
 from requests.auth import HTTPBasicAuth
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from ibm_watson import NaturalLanguageUnderstandingV1

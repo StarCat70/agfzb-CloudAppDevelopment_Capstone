@@ -101,9 +101,12 @@ class DealerReview:
         self.purchase_year = ""
         self.sentiment = ""
         self.id = ""
+        self.car_make = ""
+        self.car_model = ""
+        self.car_year = ""
 
     def __str__(self):
-        return "Review: " + self.review
+        return "Reviewer: " + self.name + "Review: " + self.review
 
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__,
@@ -121,6 +124,7 @@ class ReviewPost:
         self.car_make = ""
         self.car_model = ""
         self.car_year = ""
+        self.review = ""
 
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__,
