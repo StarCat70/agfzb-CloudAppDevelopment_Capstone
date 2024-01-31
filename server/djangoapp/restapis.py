@@ -41,6 +41,7 @@ def get_request(url, **kwargs):
 
 # Create a `post_request` to make HTTP POST requests
 # e.g., response = requests.post(url, params=kwargs, json=payload)
+"""
 def post_request(url, payload, **kwargs):
     print(kwargs)
     print("POST to {} ".format(url))
@@ -50,7 +51,11 @@ def post_request(url, payload, **kwargs):
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
-
+"""
+def post_request(url, json_payload, **kwargs):
+    url =  "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
+    response = requests.post(url, params=kwargs, json=json_payload)
+    return response
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
 #def get_dealers_from_cf(url, **kwargs):

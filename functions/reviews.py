@@ -1,7 +1,8 @@
 from cloudant.client import Cloudant
 from cloudant.query import Query
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 import atexit
+import json
 
 #Add your Cloudant service credentials here
 cloudant_username = 'ef9b1aea-e819-41d9-87ff-c95aebafcdb1-bluemix'
@@ -64,7 +65,7 @@ def post_review():
    
     # Save the review data as a new document in the Cloudant database
     db.create_document(review_data)
-    
+   
     return jsonify({"message": "Review posted successfully"}), 201
 
 if __name__ == '__main__':
