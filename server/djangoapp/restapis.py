@@ -56,6 +56,7 @@ def post_request(url, json_payload, **kwargs):
     url =  "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
     response = requests.post(url, params=kwargs, json=json_payload)
     return response
+
 # Create a get_dealers_from_cf method to get dealers from a cloud function
 # def get_dealers_from_cf(url, **kwargs):
 #def get_dealers_from_cf(url, **kwargs):
@@ -97,7 +98,8 @@ def get_dealer_reviews_from_cf(url, **kwargs):
     if json_result and "body" in json_result and "data" in json_result["body"]:
         reviews = json_result["body"]["data"]
 
-        for dealer_review_data in reviews:
+        #for dealer_review_data in reviews:
+        for review in reviews:
             # Assuming "docs" is the list of reviews
             if "docs" in dealer_review_data:
                 for review_data in dealer_review_data["docs"]:
