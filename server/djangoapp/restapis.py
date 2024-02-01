@@ -53,7 +53,9 @@ def post_request(url, payload, **kwargs):
     return json_data
 """
 def post_request(url, json_payload, **kwargs):
-    url =  "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
+    # URLs are changing periodically, so alternating comment-out
+    # url =  "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
+    url =  "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
     response = requests.post(url, params=kwargs, json=json_payload)
     return response
 
