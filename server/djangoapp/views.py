@@ -105,6 +105,29 @@ def get_dealerships(request):
 #    if request.method == "GET":
 #        return render(request, 'djangoapp/dealer_details.html', context)
 
+import requests
+
+def get_dealer_details(request, id):
+    context = {}
+    dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+    context['dealer'] = dealer
+
+    # Fetch reviews from Flask API
+    reviews_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+    reviews_response = requests.get(reviews_url, params={'id': id})
+
+    if reviews_response.status_code == 200:
+        reviews = reviews_response.json()
+        context['reviews'] = reviews
+    else:
+        context['reviews'] = []  # Handle the case when the request fails
+
+    return render(request, 'djangoapp/dealer_details.html', context)
+
+
+
+"""
 def get_dealer_details(request, id):
      #if request.method == "GET":
          context = {}
@@ -120,6 +143,7 @@ def get_dealer_details(request, id):
          context['reviews'] = reviews
 
          return render(request, 'djangoapp/dealer_details.html', context)
+"""
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
