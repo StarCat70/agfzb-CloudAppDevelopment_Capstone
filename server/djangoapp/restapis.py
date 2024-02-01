@@ -94,6 +94,47 @@ def get_dealer_reviews_from_cf(url, **kwargs):
         json_result = get_request(url, id=id)
     else:
         json_result = get_request(url)
+    print(json_result, "96")
+    if json_result:
+        if isinstance(json_result, list):  # Check if json_result is a list
+            reviews = json_result
+        else:
+            reviews = json_result["data"]["docs"]
+
+        # Check if 'reviews' is a list of one dictionary
+        if isinstance(reviews, list) and len(reviews) == 1 and isinstance(reviews[0], dict):
+            reviews = reviews[0]
+
+        for dealer_review in reviews:
+            print("dealer_review--------------------", dealer_review)  # Print dealer_review
+            if isinstance(dealer_review, str):  # Check if dealer_review is a string
+                try:
+                    dealer_review = json.loads(dealer_review)
+                except json.JSONDecodeError:
+                    continue  # Skip this iteration if the JSON decoding fails
+
+            review_obj = DealerReview(
+                dealership=dealer_review.get("dealership"),
+                name=dealer_review.get("name"),
+                purchase=dealer_review.get("purchase"),
+                review=dealer_review.get("review"),
+            )
+
+            sentiment = analyze_review_sentiments(review_obj.review)
+            print(sentiment)
+            review_obj.sentiment = sentiment
+            results.append(review_obj)
+
+    return results
+"""    
+# Get dealer reviews
+def get_dealer_reviews_from_cf(url, **kwargs):
+    results = []
+    id = kwargs.get("id")
+    if id:
+        json_result = get_request(url, id=id)
+    else:
+        json_result = get_request(url)
 
     if json_result and "body" in json_result and "data" in json_result["body"]:
         reviews = json_result["body"]["data"]
@@ -128,7 +169,7 @@ def get_dealer_reviews_from_cf(url, **kwargs):
                     results.append(review_obj)
 
     return results
-
+"""
 # Note: Adjust the keys based on the actual structure of the API response
 # MY note: The above code from the point up to the commented out section is to be tinkered with
 

@@ -66,7 +66,32 @@
         </div>
     </nav>
 
-<div class="container-fluid">
+<!-- Add reviews as cards -->
+<div class="container">
+    {% for review in reviews %}
+    {% if forloop.counter0|divisibleby:3 %}
+    <div class="row">
+    {% endif %}
+    <div class="col-sm-4" margin=10px>
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-left" width="30" src="{% if review.sentiment == 'positive' %}{{ MEDIA_URL }}/emoji/positive.png{% elif review.sentiment == 'neutral' %}{{ MEDIA_URL }}/emoji/neutral.png{% elif review.sentiment == 'negative' %}{{ MEDIA_URL }}/emoji/negative.png{% endif %}" />
+            <div class="card-body">
+                <h5><label class="card-title"> {{ review.car_model }} </label></h5>
+                <h5><label class="card-title"> {{ review.car_make }} </label></h5> <br>
+                <h5><label class="card-title">{{ review.purchase_date}}</label></h5> <br>
+                <h6><label class="card-text"> {{ review.review }}</label></h6>
+            </div>
+        </div>
+    </div>
+    {% if forloop.counter|divisibleby:3 or forloop.last %}
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+
+<!--<div class="container-fluid">
         <h2>Reviews for {{ dealer.full_name }}</h2>
 </div>
 
@@ -95,7 +120,7 @@
         <p>No reviews available</p>
     {% endif %}
 </div>
-
+-->
 </body>
 
 </html>
