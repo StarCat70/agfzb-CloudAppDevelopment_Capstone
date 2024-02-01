@@ -200,10 +200,10 @@ def get_dealer_by_id_from_cf(url, id):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-
+"""
 def analyze_review_sentiments(text):
-    url = "https://api.eu-gb.natural-language-understanding.watson.cloud.ibm.com/instances/c8b0f019-31d6-41ac-b003-a2a31608839e"
-    api_key = "X2W_XG21E2BqmQ57cKeaX1rI9N43ZflG2KuaUmPJ_7wq"
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/3161aa14-bc9f-4e30-b8d4-8d6e806f0eb6"
+    api_key = "KxhafES4m3v4QJ800EoicmSxs0QiJC8P5britq5Pc4Kc"
     authenticator = IAMAuthenticator(api_key)
     natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01', authenticator=authenticator)
     natural_language_understanding.set_service_url(url)
@@ -218,3 +218,16 @@ def analyze_review_sentiments(text):
     label = response['sentiment']['document']['label']
 
     return label
+"""
+def analyze_review_sentiments(dealerreview):
+    url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/3161aa14-bc9f-4e30-b8d4-8d6e806f0eb6"
+    api_key = "KxhafES4m3v4QJ800EoicmSxs0QiJC8P5britq5Pc4Kc"
+    authenticator = IAMAuthenticator(api_key)
+    natural_language_understanding = NaturalLanguageUnderstandingV1(version='2021-08-01',authenticator=authenticator)
+    natural_language_understanding.set_service_url(url)
+    response = natural_language_understanding.analyze( text=text+"hello hello hello",features=Features(sentiment=SentimentOptions(targets=[text+"hello hello hello"]))).get_result()
+    label=json.dumps(response, indent=2)
+    label = response['sentiment']['document']['label']
+    
+    
+    return(label)

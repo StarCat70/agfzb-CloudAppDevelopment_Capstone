@@ -29,7 +29,6 @@
         }
     </style>
 
-
 </head>
 
     <body>
@@ -66,6 +65,9 @@
         </div>
     </nav>
 
+<div class="container-fluid">
+        <h2>Reviews for {{ dealer.full_name }}</h2>
+</div>
 <!-- Add reviews as cards -->
 <div class="container">
     {% for review in reviews %}
@@ -88,7 +90,13 @@
     {% endif %}
     {% endfor %}
 </div>
-
+<div class="container-fluid">
+    {% if reviews %}
+        <p>Reviews: {{ reviews|length }}</p>
+    {% else %}
+        <p>No reviews available</p>
+    {% endif %}
+</div>
 
 
 <!--<div class="container-fluid">
@@ -113,13 +121,7 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
-    {% if reviews %}
-        <p>Reviews: {{ reviews|length }}</p>
-    {% else %}
-        <p>No reviews available</p>
-    {% endif %}
-</div>
+
 -->
 </body>
 
