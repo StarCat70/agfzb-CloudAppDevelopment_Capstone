@@ -200,7 +200,7 @@ def get_dealer_by_id_from_cf(url, id):
 # def analyze_review_sentiments(text):
 # - Call get_request() with specified arguments
 # - Get the returned sentiment label such as Positive or Negative
-"""
+
 def analyze_review_sentiments(text):
     url = "https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/3161aa14-bc9f-4e30-b8d4-8d6e806f0eb6"
     api_key = "KxhafES4m3v4QJ800EoicmSxs0QiJC8P5britq5Pc4Kc"
@@ -231,3 +231,4 @@ def analyze_review_sentiments(dealerreview):
     
     
     return(label)
+"""
