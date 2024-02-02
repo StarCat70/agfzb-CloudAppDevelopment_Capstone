@@ -94,8 +94,8 @@ def get_dealerships(request):
     if request.method == "GET":
         context = {}
         # URLs keep changing periodically, so alternating comment-out
-        # url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-        url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+        # url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         dealerships = get_dealers_from_cf(url)
         context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
@@ -111,15 +111,15 @@ import requests
 def get_dealer_details(request, id):
     context = {}
     # URLs keep changing periodically, so alternating comment-out
-    # dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-    dealer_url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    # dealer_url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
     dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
     context['dealer'] = dealer
 
     # Fetch reviews from Flask API
     # URLs keep changing periodically, so alternating comment-out
-    # reviews_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
-    reviews_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+    reviews_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
+    # reviews_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
     reviews_response = requests.get(reviews_url, params={'id': id})
 
     if reviews_response.status_code == 200:
@@ -131,25 +131,6 @@ def get_dealer_details(request, id):
     return render(request, 'djangoapp/dealer_details.html', context)
 
 
-
-"""
-def get_dealer_details(request, id):
-     #if request.method == "GET":
-         context = {}
-         dealer_url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-          # it keeps changing!dealer_url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-         dealer = get_dealer_by_id_from_cf(dealer_url, id = id)
-         context['dealer'] = dealer
-
-         review_url = "https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
-         #  it keeps changing!review_url = "https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
-         reviews = get_dealer_reviews_from_cf(review_url, id = id)
-         print("Reviews", reviews) # Debug print
-         context['reviews'] = reviews
-
-         return render(request, 'djangoapp/dealer_details.html', context)
-"""
-
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
 # ...
@@ -157,8 +138,8 @@ def get_dealer_details(request, id):
 def add_review(request, id):
     context = {}
     # URLs keep changing periodically, so alternating comment-out
-    # url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
-    url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"    
+    url = "https://starcat7-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    # url = "https://starcat7-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"    
     dealer = get_dealer_by_id_from_cf(url, id)
     context["dealer"] = dealer
     if request.method == 'GET':
@@ -184,8 +165,8 @@ def add_review(request, id):
                 "car_year": int(car.year.strftime("%Y")),
             }
             # URLs keep changing periodically, so alternating comment-out
-            # post_request("https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review", review, id=id)
-            post_request("https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review", review, id=id)            
+            post_request("https://starcat7-5000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review", review, id=id)
+            # post_request("https://starcat7-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review", review, id=id)            
             return redirect("djangoapp:dealer_details", id=id)
 
     # Return a default response if neither GET nor POST

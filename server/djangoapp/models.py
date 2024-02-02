@@ -113,26 +113,7 @@ class DealerReview:
     def to_json(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                             sort_keys=True, indent=4)
-"""
 
-class DealerReview(models.Model):
-    dealership = models.CharField(max_length=100)
-    name = models.CharField(max_length=100)
-    purchase = models.BooleanField(default=False)
-    review = models.TextField()
-    purchase_date = models.DateField(null=True, blank=True)
-    car_make = models.CharField(max_length=50, null=True, blank=True)
-    car_model = models.CharField(max_length=50, null=True, blank=True)
-    car_year = models.IntegerField(null=True, blank=True)
-    sentiment = models.CharField(max_length=50, null=True, blank=True)
-
-    def __str__(self):
-        return f"Review: {self.review}"
-
-    def to_json(self):
-        return json.dumps(self, default=lambda o: o.__dict__,
-                          sort_keys=True, indent=4)
-"""
 # <HINT> Create a plain Python class `ReviewPost` to post review data
 class ReviewPost:
 
