@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
     <style>
+        
         /* Add custom styles for card size */
         .card {
             margin-bottom: 20px; /* Add space between cards */
@@ -26,6 +27,15 @@
         .card-body {
             padding: 50px; /* Add padding inside the card body */
             background-color: #f8f9fa; /* Light gray background color */
+        }
+
+        footer {
+            width: 100%;
+            box-sizing: border-box;
+            color: #000;
+            text-align: center;
+            position: fixed; /* Fixed position to stick at the bottom */
+            bottom: 0; /* Stick to the bottom */
         }
     </style>
 
@@ -65,10 +75,10 @@
         </div>
     </nav>
 
-<div class="container-fluid">
-        <h2>Reviews for {{ dealer.full_name }}</h2>
-</div>
+    <h4 style="text-align:center">Reviews for <b>{{dealer.full_name}}</b></h4>
+    <hr>
 <!-- Add reviews as cards -->
+{% if reviews %}
 <div class="container">
     {% for review in reviews %}
     {% if forloop.counter0|divisibleby:3 %}
@@ -76,11 +86,22 @@
     {% endif %}
     <div class="col-sm-4" margin=10px>
         <div class="card" style="width: 18rem;">
-            <img class="card-img-left" width="30" src="{% if review.sentiment == 'positive' %}{{ MEDIA_URL }}/emoji/positive.png{% elif review.sentiment == 'neutral' %}{{ MEDIA_URL }}/emoji/neutral.png{% elif review.sentiment == 'negative' %}{{ MEDIA_URL }}/emoji/negative.png{% endif %}" />
+            {% if review.sentiment == "positive" %}
+            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" width="36px" height="36px"
+                alt="Sentiment">
+            {% elif review.sentiment == "negative" %}
+            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" width="36px" height="36px"
+                alt="Sentiment">
+            {% else %}
+            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" width="36px" height="36px"
+                alt="Sentiment">
+            {% endif %}
             <div class="card-body">
+                {% if review.car_make %}
                 <h5><label class="card-title"> {{ review.car_model }} </label></h5>
-                <h5><label class="card-title"> {{ review.car_make }} </label></h5> <br>
-                <h5><label class="card-title">{{ review.purchase_date}}</label></h5> <br>
+                <h5><label class="card-title"> {{ review.car_make }} </label></h5>
+                <h5><label class="card-title">{{ review.purchase_date}}</label></h5> 
+                {% endif %}
                 <h6><label class="card-text"> {{ review.review }}</label></h6>
             </div>
         </div>
@@ -90,39 +111,26 @@
     {% endif %}
     {% endfor %}
 </div>
-<div class="container-fluid">
-    {% if reviews %}
-        <p>Reviews: {{ reviews|length }}</p>
-    {% else %}
-        <p>No reviews available</p>
-    {% endif %}
+
+
+{% else %}
+<div class="container-fluid" style="text-align:center">
+<p>No reviews are available.</p>
 </div>
+{% endif %}
+
+<a style="position: relative; left: 47%;" class="btn btn-link" href="{% url 'djangoapp:add_review' dealer.id%}">Add Review</a>
 
 
-<!--<div class="container-fluid">
-        <h2>Reviews for {{ dealer.full_name }}</h2>
-</div>
+<footer class="bg-light text-center text-lg-start mt-5">
+       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+         © 2022
+         <a class="text-dark" href="{% url 'djangoapp:index' %}"
+           >Best Cars</a
+         >
+       </div>
+</footer>
 
-<div class="container">
-    <div class="card-columns">
-        {% for review in reviews|slice:":6" %}
-            <div class="card">
-                {# Visualize sentiment using emoji based on sentiment value #}
-                {% if review.sentiment == "positive" %}
-                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/positive.png" alt="Positive Emoji" style="width: 150px; height: 150px;">
-                {% elif review.sentiment == "neutral" %}
-                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/neutral.png" alt="Neutral Emoji" style="width: 150px; height: 150px;">
-                {% elif review.sentiment == "negative" %}
-                    <img class="card-img-left" src="{{MEDIA_URL}}/emoji/negative.png" alt="Negative Emoji" style="width: 150px; height: 150px;">
-                {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ review.car_model }} {{ review.car_make }} ({{ review.car_year }})</h5>
-                    <p class="card-text">{{ review.review }}</p>
-                </div>
-            </div>
-        {% endfor %}
-
--->
 </body>
 
 </html>

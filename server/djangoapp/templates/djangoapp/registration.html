@@ -11,6 +11,33 @@
     <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+
+        .container-fluid {
+            flex: 1; /* Allow the container to grow and take remaining space */
+        }
+
+        .center-text {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        footer {
+            width: 100%;
+            box-sizing: border-box;
+            color: #000;
+            text-align: center;
+
+        }
+    </style>
+
 </head>
 <body>
     <nav class="navbar navbar-light bg-light">
@@ -67,4 +94,38 @@
       {% endif %}
   </div>
 </form>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container-fluid {
+        flex: 1;
+    }
+
+    .center-text {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    footer {
+        width: 100%;
+        box-sizing: border-box;
+        color: #000;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+    }
+</style>
+<footer class="bg-light text-center text-lg-start mt-5">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2022
+      <a class="text-dark" href="{% url 'djangoapp:index' %}"
+        >Best Cars</a
+      >
+    </div>
+</footer>
 </body>

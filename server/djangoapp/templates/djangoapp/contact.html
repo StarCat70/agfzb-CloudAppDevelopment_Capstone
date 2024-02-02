@@ -14,24 +14,19 @@
         body {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
         }
 
-        .navbar {
-            width: 100%;
-            /*background-color: #333; /* Change this to your desired background color */
-            /*padding: 15px; */
-            box-sizing: border-box;
-            display: flex;
-            justify-content: flex-start;
+
+
+        .container-fluid {
+            flex: 1; /* Allow the container to grow and take remaining space */
         }
 
         .center-text {
             text-align: center;
-            margin-top: 50px; /* Adjust the value to set the desired space at the top */
+            margin-top: 50px;
         }
     </style>
 </head>
@@ -73,6 +68,40 @@
       123 Maple Avenue<br>Anywhere, USA 75000<br>
       <b>Phone</b><br>(123) 123-1234</p>
 </div>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
 
+    .container-fluid {
+        flex: 1;
+    }
+
+    .center-text {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    footer {
+        width: 100%;
+        box-sizing: border-box;
+        color: #000;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+    }
+</style>
+<footer class="bg-light text-center text-lg-start mt-5">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      © 2022
+      <a class="text-dark" href="{% url 'djangoapp:index' %}"
+        >Best Cars</a
+      >
+    </div>
+
+</footer>
 </body>
 </html>
